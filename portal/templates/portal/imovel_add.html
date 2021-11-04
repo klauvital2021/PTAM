@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+ <div class="card">
+    <div class="card-body">
+        <h4>Inserir Imóvel</h4>
+        <hr>
+         <form action="{% url 'imovel_add' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button class ="btn btn-success" type="submit">Salvar</button>
+            <button class ="btn btn-warning" onclick="window.location.href='{% url 'imoveis' %}'">Cancelar</button>
+        </form>
+    </div>
+
+ </div>
+
+
+{% endblock %}

@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+   <div style="text-align:center" >
+        <b><h1>Avaliação Imobiliária </h1></b> </div>
+    <hr>
+    <br><br>
+      <div style=" margin-left: 5%">
+        Preencha os dados do imóvel avaliando: </div>
+    </br></br>
+    <div style="margin-left: 5%">
+        <form action="/pagina-processa-dados-do-form" method="post">
+        <table>
+              <tr>
+                  <td><label for="nome">Uso  :</label> </td>
+                  <td><select name="select">
+                        <option value="valor1">Residencial</option>
+                        <option value="valor2" selected >Comercial</option>
+                        <option value="valor3">Misto</option>
+                    </select></td>
+                  <td>&ensp;&ensp;&ensp;&ensp;</td>
+                  <td> <label for="nome">Tipo :</label> </td>
+                  <td> <select name="select">
+                        <option value="valor1" selected>Apartamento</option>
+                        <option value="valor2" >Casa em condomínio</option>
+                        <option value="valor3">Casa de Rua</option>
+                        <option value="valor4">Sobrado em Condomínio</option>
+                        <option value="valor5" >Sobrado de Rua</option>
+                        <option value="valor6">Terreno</option>
+                        <option value="valor7">Chácara</option>
+                        <option value="valor8">Sítio</option>
+                        <option value="valor9">Área</option>
+                    </select></td>
+                  <td>&ensp;&ensp;&ensp;&ensp;</td>
+                  <td> <label for="estadoConserv">Conservação:</label></td>
+                  <td><select name="select">
+                        <option value="valor1"selected>Novo</option>
+                        <option value="valor2">Entre novo e regular</option>
+                        <option value="valor3">Regular</option>
+                        <option value="valor4">Entre regular e reparos simples</option>
+                        <option value="valor5" >Reparos simples</option>
+                        <option value="valor6">Entre reparos simples e importantes</option>
+                       </select>
+                  </td>
+                  <td>&ensp;&ensp;&ensp;&ensp;</td>
+                  <td>&ensp;&ensp;&ensp;&ensp;</td>
+              </tr>
+       <tr>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+       </tr>
+        <tr>
+          <td> <label for="padrao">Padrão:</label></td>
+          <td>  <select name="select">
+                <option value="valor1">Altíssimo</option>
+                <option value="valor2" selected>Alto</option>
+                <option value="valor3">Médio-alto</option>
+                <option value="valor4">Médio-Baixo</option>
+                <option value="valor5">Baixo</option>
+            </select></td>
+          <td>&ensp;&ensp;&ensp;&ensp;</td>
+          <td> <label for="idade">Idade:</label></td>
+          <td> <input type="text" id="idade" size="10" /> </td>
+          <td>&ensp;&ensp;&ensp;&ensp;</td>
+          <td> <label for="areaTotal">Área total:</label></td>
+          <td> <input type="text" id="aT" size="10" placeholder="m²"/> </td>
+          <td> <label for="areaConst">Área útil:</label></td>
+          <td> <input type="text" id="aC" size="10" placeholder="m²" /></td>
+     </tr>
+      <tr>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+
+       </tr>
+      <tr>
+          <td> <label for="condominio">Condomínio:</label></td>
+          <td> <input type="text" id="condominio" size="30" /> </td>
+          <td>&ensp;&ensp;&ensp;&ensp;</td>
+          <td> <label for="bairro">Bairro:</label></td>
+          <td> <input type="text" id="bairro" size="10" /> </td>
+          <td>&ensp;&ensp;&ensp;&ensp;</td>
+          <td> <label for="cidade">Cidade:</label></td>
+          <td> <input type="text" id="cidade" size="10" /> </td>
+          <td> <label for="uf">UF:</label></td>
+          <td> <select id="estado" name="estado">
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP" selected>São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+          </select> </td>
+
+      </tr>
+      <tr>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+
+       </tr>
+        <tr>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+           <td>&ensp;&ensp;&ensp;&ensp;</td>
+
+       </tr>
+       <tr style="text-align:center">
+           <td colspan="10">
+                <input type="submit" value="Avaliar" style="font-size : 20px; width: 30%; height: 50px;background-color:red; border: none;" />
+
+           </td>
+       </tr>
+
+   </table>
+  </form>
+  </div>
+
+{% endblock %}
+
