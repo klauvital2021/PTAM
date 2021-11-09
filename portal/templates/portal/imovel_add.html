@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load bootstrap %}
 
 {% block content %}
  <div class="card">
@@ -7,7 +8,7 @@
         <hr>
          <form action="{% url 'imovel_add' %}" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{  form|bootstrap }}
 
             <button class ="btn btn-success" type="submit">Salvar</button>
             <button class ="btn btn-warning" onclick="window.location.href='{% url 'imoveis' %}'">Cancelar</button>

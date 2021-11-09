@@ -30,6 +30,9 @@ class Nomecondominio(models.Model):
     def __str__(self):
         return self.nome
 
+    def get_absolute_url(self):
+        return reverse("cond_edit", kwargs={"cond_pk": self.id})
+
 
 class Padrao(models.Model):
     nome = models.CharField(max_length=100, blank=True, null=True)
@@ -70,22 +73,33 @@ status_choices = (
         ('2', 'Vendido')
     )
 
-
 class Imovel(models.Model):
     valordevenda = models.DecimalField(db_column='valorDeVenda', max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='Valor de venda')  # Field name made lowercase.
     nomecondominio = models.ForeignKey(Nomecondominio, on_delete=models.CASCADE,  blank=True, null=True, verbose_name='Condominio')
-    idade = models.IntegerField()
-    bairro = models.CharField(max_length=100)
-    cidade = models.CharField(max_length=200)
-    aconstruida = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Área Construída/Útil')
+    idade = models.IntegerField(blank=True)
+    bairro = models.CharField(max_length=100, blank=True)
+    cidade = models.CharField(max_length=200, blank=True)
+    aconstruida = models.DecimalField(blank=True, max_digits=10, decimal_places=2,  verbose_name='Área Construída/Útil')
     atotal = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='Área Total')
     dtacadastro = models.DateField(db_column='dtaCadastro', blank=True, null=True, verbose_name='Data de cadastro')  # Field name made lowercase.
     status = models.CharField(max_length=1, choices=status_choices)
-    padrao = models.ForeignKey(Padrao, on_delete=models.CASCADE)
-    estadoconser = models.ForeignKey(Estadoconser, on_delete=models.CASCADE, verbose_name='Estado de Conservação')  # Field name made lowercase.
-    tipo = models.ForeignKey(Tipo, on_delete=models.CASCADE)
-    corretor = models.ForeignKey(Corretor, on_delete=models.CASCADE)
-    vidautil = models.ForeignKey(Vidautil, on_delete=models.CASCADE, verbose_name='Vida Útil')  # Field name made lowercase.
+    padrao = models.ForeignKey(Padrao, on_delete=models.CASCADE, blank=True)
+    estadoconser = models.ForeignKey(Estadoconser, on_delete=models.CASCADE, blank=True, verbose_name='Estado de Conservação')  # Field name made lowercase.
+    tipo = models.ForeignKey(Tipo, on_delete=models.CASCADE, blank=True)
+    corretor = models.ForeignKey(Corretor, on_delete=models.CASCADE, blank=True)
+    vidautil = models.ForeignKey(Vidautil, on_delete=models.CASCADE, blank=True,  verbose_name='Vida Útil')  # Field name made lowercase.
+
+    class Meta:
+        unique_together = ['padrao', 'tipo', 'nomecondominio', 'estadoconser', 'corretor', 'vidautil']
+
+    def __str__(self):
+        return "{} - {} - {} - {} - {} -{}".format(self.padrao.nome, self.tipo.nome, self.nomecondominio.nome, self.estadoconser.nome, self.corretor.nome, self.vidautil.nome)
 
     def get_absolute_url(self):
         return reverse("editar", kwargs={"imovel_pk": self.id})
+
+'''
+    def get_absolute_url(self):
+        return reverse("listavaliacao", kwargs={"imovel.nomecondominio": self.nomecondominio})
+'''
+

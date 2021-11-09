@@ -3,11 +3,12 @@ from portal import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('avaliacao', views.filtraCondominio, name='avaliacao'),
+    path('referenciais/<int:condominio>/', views.referenciais, name='listavaliacao'),
     path('imoveis/', views.imovel, name='imoveis'),
     path('imovel/add/', views.imovel_add, name='imovel_add'),
     path('imovel/edit/<int:imovel_pk>/', views.imovel_edit, name='editar'),
     path('imovel/delete/<int:imovel_pk>/', views.imovel_delete, name='imovel_delete'),
-
     path('estadoConservacao/', views.estadoConserv, name='estadoConservacao'),
     path('estadoConserv/add', views.estadoConserv_add, name='estadoConserv_add'),
     path('condominio/', views.condominio, name='condominio'),

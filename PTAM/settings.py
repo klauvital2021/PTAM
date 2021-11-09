@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'portal.apps.PortalConfig',
+    'bootstrapform',
+    'django_filters',
+
 
 ]
 

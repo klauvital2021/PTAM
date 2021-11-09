@@ -16,6 +16,11 @@ class ImovelForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['dtacadastro'].widget.attrs.update({'class': 'mask-date'})
 
+class ImovelFormFilter(forms.ModelForm):
+    class Meta:
+        model = Imovel
+        exclude=('valordevenda', 'dtacadastro', 'corretor', 'vidautil', 'status')
+
 class TipoForm(forms.ModelForm):
     class Meta:
         model = Tipo

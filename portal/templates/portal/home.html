@@ -10,18 +10,18 @@
         Preencha os dados do imóvel avaliando: </div>
     </br></br>
     <div style="margin-left: 5%">
-        <form action="/pagina-processa-dados-do-form" method="post">
+
         <table>
               <tr>
                   <td><label for="nome">Uso  :</label> </td>
-                  <td><select name="select">
-                        <option value="valor1">Residencial</option>
-                        <option value="valor2" selected >Comercial</option>
+                  <td><select name="uso">
+                        <option value="valor1" selected>Residencial</option>
+                        <option value="valor2">Comercial</option>
                         <option value="valor3">Misto</option>
                     </select></td>
                   <td>&ensp;&ensp;&ensp;&ensp;</td>
                   <td> <label for="nome">Tipo :</label> </td>
-                  <td> <select name="select">
+                  <td> <select name="tipo">
                         <option value="valor1" selected>Apartamento</option>
                         <option value="valor2" >Casa em condomínio</option>
                         <option value="valor3">Casa de Rua</option>
@@ -34,7 +34,7 @@
                     </select></td>
                   <td>&ensp;&ensp;&ensp;&ensp;</td>
                   <td> <label for="estadoConserv">Conservação:</label></td>
-                  <td><select name="select">
+                  <td><select name="estadoConserv">
                         <option value="valor1"selected>Novo</option>
                         <option value="valor2">Entre novo e regular</option>
                         <option value="valor3">Regular</option>
@@ -60,7 +60,7 @@
        </tr>
         <tr>
           <td> <label for="padrao">Padrão:</label></td>
-          <td>  <select name="select">
+          <td>  <select name="padrao">
                 <option value="valor1">Altíssimo</option>
                 <option value="valor2" selected>Alto</option>
                 <option value="valor3">Médio-alto</option>
@@ -69,12 +69,12 @@
             </select></td>
           <td>&ensp;&ensp;&ensp;&ensp;</td>
           <td> <label for="idade">Idade:</label></td>
-          <td> <input type="text" id="idade" size="10" /> </td>
+          <td> <input type="text" name="idade" size="10" /> </td>
           <td>&ensp;&ensp;&ensp;&ensp;</td>
           <td> <label for="areaTotal">Área total:</label></td>
-          <td> <input type="text" id="aT" size="10" placeholder="m²"/> </td>
+          <td> <input type="text" name="atotal" size="10" placeholder="m²"/> </td>
           <td> <label for="areaConst">Área útil:</label></td>
-          <td> <input type="text" id="aC" size="10" placeholder="m²" /></td>
+          <td> <input type="text" name="aconstruida" size="10" placeholder="m²" /></td>
      </tr>
       <tr>
            <td>&ensp;&ensp;&ensp;&ensp;</td>
@@ -91,13 +91,13 @@
        </tr>
       <tr>
           <td> <label for="condominio">Condomínio:</label></td>
-          <td> <input type="text" id="condominio" size="30" /> </td>
+          <td> <input type="text" name="condominio" size="30" /> </td>
           <td>&ensp;&ensp;&ensp;&ensp;</td>
           <td> <label for="bairro">Bairro:</label></td>
-          <td> <input type="text" id="bairro" size="10" /> </td>
+          <td> <input type="text" name="bairro" size="10" /> </td>
           <td>&ensp;&ensp;&ensp;&ensp;</td>
           <td> <label for="cidade">Cidade:</label></td>
-          <td> <input type="text" id="cidade" size="10" /> </td>
+          <td> <input type="text" name="cidade" size="10" /> </td>
           <td> <label for="uf">UF:</label></td>
           <td> <select id="estado" name="estado">
                 <option value="AC">Acre</option>
@@ -158,13 +158,13 @@
        </tr>
        <tr style="text-align:center">
            <td colspan="10">
-                <input type="submit" value="Avaliar" style="font-size : 20px; width: 30%; height: 50px;background-color:red; border: none;" />
+               <a class ="btn btn-warning btn-sm">Avaliar</a>
 
            </td>
        </tr>
 
    </table>
-  </form>
+
   </div>
 
 {% endblock %}

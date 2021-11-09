@@ -1,26 +1,40 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from portal.forms import ImovelForm, PadraoForm, NomecondominioForm, EstadoconserForm, TipoForm
+
+from portal.filters import ImovelFilterCondominio
+from portal.forms import ImovelForm, PadraoForm, NomecondominioForm, EstadoconserForm, TipoForm, ImovelFormFilter
 from portal.models import Imovel, Padrao, Nomecondominio, Estadoconser, Tipo
 
 
 def home(request):
     return render(request, 'portal/home.html')
 
-'''
-def imovel_edit(request, imovel_pk):
-    imovel = Imovel.objects.get(pk=imovel_pk)
-    form = ImovelForm(request.POST or None, instance=imovel)
-
-    if request.POST:
-        if form.is_valid():
-            form.save()
-            return redirect('imoveis')
-
+def filtraCondominio(request):
+    form = ImovelFormFilter(request.GET)
     context = {
         'form': form,
     }
-    return render(request, 'portal/imovel_edit.html', context)
+    return render(request, 'portal/avaliacao.html', context)
 '''
+def avaliar (request, condominio):
+    listaR = Imovel.objects.filter(nomecondominio=condominio)
+
+    context = {
+        'form': listaR,
+    }
+
+    return render(request, 'portal/referenciais.html', context)
+
+'''
+def referenciais(request, cond):
+    imovel = Imovel.objects.get(nomecondominio=cond)
+#    object_list = Imovel.objects.all()
+    imovel_list = ImovelFilterCondominio(request.GET, queryset=imovel)
+
+    context = {
+        'imovel': imovel,
+        'filter': imovel_list,
+    }
+    return render(request, 'portal/referenciais.html', {'filter': imovel_list})
 
 
 def imovel_edit(request, imovel_pk):
@@ -110,9 +124,9 @@ def cond_add(request):
 
 
 def cond_edit(request, cond_pk):
-    condominio = Imovel.objects.get(pk=cond_pk)
+    condominio = Nomecondominio.objects.get(pk=cond_pk)
 
-    form = ImovelForm(request.POST or None, instance=condominio)
+    form = NomecondominioForm(request.POST or None, instance=condominio)
 
     if request.POST:
         if form.is_valid():
