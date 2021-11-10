@@ -7,17 +7,9 @@
         <h4>Avaliaçao Imobiliária</h4>
         <hr>
          <form action="." method="Get">
-      <!--      #   {{  form|bootstrap }} -->
-               {{ form.tipo.nome }}
-               {{ form.nomecondominio.nome }}
-               {{ form.idade }}
-               {{ form.bairro }}
-               {{ form.cidade }}
-               {{ form.aconstruida }}
-               {{ form.atotal }}
-               {{ form.padrao.nome }}
-               {{ form.estadoconserv.nome }}
-                <a class ="btn btn-warning btn-sm" href="{% url 'listavaliacao'  %}">Avaliar</a>
+             {{  form|bootstrap }}
+
+             <a class ="btn btn-warning btn-sm" href="{% url 'refaval'  %}">Avaliar</a>
         </form>
     </div>
  </div>

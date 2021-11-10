@@ -100,6 +100,6 @@ class Imovel(models.Model):
 
 '''
     def get_absolute_url(self):
-        return reverse("listavaliacao", kwargs={"imovel.nomecondominio": self.nomecondominio})
-'''
+        return reverse("referenciais", kwargs={"imovel.nomecondominio": self.nomecondominio})
 
+'''

@@ -6,50 +6,56 @@
 <div class="card-body">
  <h4> Imoveis Referenciais </h4>
  <hr>
-    <table class = "table table-striped">
-      <thead>
-        <tr>
-            <th>ID</th>
-            <th>Dta cadastro</th>
-            <th>Tipo</th>
-            <th>Condomínio</th>
-            <th>Bairro</th>
-            <th>Cidade</th>
-            <th>AC</th>
-            <th>AT</th>
-            <th>Estátus</th>
-            <th>Padrão</th>
-            <th>EC</th>
-            <th>Idade</th>
-            <th>Valor</th>
-            <th>Acões</th>
-        </tr>
-      </thead>
-      <tbody>
-          for imovel in '' %}
-         {%  for imovel in filter %}
-         <tr>
-             <td>{{ imovel.id  }} </td>
-             <td>{{ imovel.dtacadastro  }} </td>
-             <td>{{ imovel.tipo.nome }}</td>
-             <td>{{ imovel.nomecondominio.nome }} </td>
-             <td>{{ imovel.bairro }}</td>
-             <td>{{ imovel.cidade }} </td>
-             <td>{{ imovel.aconstruida }} </td>
-             <td>{{ imovel.atotal }} </td>
-             <td>{{ imovel.status }} </td>
-             <td>{{ imovel.padrao.nome }} </td>
-             <td>{{ imovel.estadoconser.nome }} </td>
-             <td>{{ imovel.idade }} </td>
-             <td>{{ imovel.valordevenda }} </td>
-             <td>
-                 <a class ="btn btn-danger btn-sm" type="submit"></a>
-             </td>
-         </tr>
-         {% endfor %}
-      </tbody>
-  </table>
+   <div>Dados do imóvel avaliando :
+        {{ dados}}
+   </div>
+ <br/>
+   <div>
+       Selecione os imóveis como referencia e clique em calcular: </div>
+ <br/>
+        <table class = "table table-striped">
+          <thead>
+            <tr>
+                <th>ID</th>
+                <th>Dta cadastro</th>
+                <th>Tipo</th>
+                <th>Condomínio</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>AC</th>
+                <th>AT</th>
+                <th>Estátus</th>
+                <th>Padrão</th>
+                <th>EC</th>
+                <th>Idade</th>
+                <th>Valor</th>
+                <th>Acões</th>
+            </tr>
+          </thead>
+          <tbody>
+             {%  for imovel in filtroCond %}
+             <tr>
+                 <td>{{ imovel.id  }} </td>
+                 <td>{{ imovel.dtacadastro  }} </td>
+                 <td>{{ imovel.tipo.nome }}</td>
+                 <td>{{ imovel.nomecondominio.nome }} </td>
+                 <td>{{ imovel.bairro }}</td>
+                 <td>{{ imovel.cidade }} </td>
+                 <td>{{ imovel.aconstruida }} </td>
+                 <td>{{ imovel.atotal }} </td>
+                 <td>{{ imovel.status }} </td>
+                 <td>{{ imovel.padrao.nome }} </td>
+                 <td>{{ imovel.estadoconser.nome }} </td>
+                 <td>{{ imovel.idade }} </td>
+                 <td>{{ imovel.valordevenda }} </td>
+                 <td> <input type="checkbox" name= 'ok' class="form-check-input" id="exampleCheck1">
+             </tr>
 
+             {% endfor %}
+
+          </tbody>
+        </table>
+        <div><a class ="btn btn-success btn-sm" href="{% url 'calcular' %}">Calcular </a></div>
 </div>
 </div>
 {% endblock %}

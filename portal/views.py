@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-
-from portal.filters import ImovelFilterCondominio
+from django.db.models import Q
 from portal.forms import ImovelForm, PadraoForm, NomecondominioForm, EstadoconserForm, TipoForm, ImovelFormFilter
 from portal.models import Imovel, Padrao, Nomecondominio, Estadoconser, Tipo
 
@@ -8,34 +7,70 @@ from portal.models import Imovel, Padrao, Nomecondominio, Estadoconser, Tipo
 def home(request):
     return render(request, 'portal/home.html')
 
+def TesteRetorno(request):
+    context = {}
+
+    if request.method == "POST":
+        condominio = request.POST.get ('condominio', None)
+        bairro = request.POST.get('bairro', None)
+
+        erro = {}
+
+        if condominio != "Odila":
+            erro['condominio']= "O nome nao é esperado"
+        if bairro != "Claudia":
+                erro['bairro']= "O nome nao é esperado"
+
+        if erro:
+               context ['erros'] = erro
+        else:
+               # qdo nao tem erro
+               print("Salvando os dados")
+               context['mensagem'] = "Os dados foram salvos com sucesso!"
+
+    return render(request, 'portal/retorno.html', context=context)
+
+
 def filtraCondominio(request):
     form = ImovelFormFilter(request.GET)
     context = {
         'form': form,
     }
     return render(request, 'portal/avaliacao.html', context)
-'''
-def avaliar (request, condominio):
-    listaR = Imovel.objects.filter(nomecondominio=condominio)
 
-    context = {
-        'form': listaR,
-    }
 
-    return render(request, 'portal/referenciais.html', context)
+def referenciais(request):
+   if request.method == "POST":
 
-'''
-def referenciais(request, cond):
-    imovel = Imovel.objects.get(nomecondominio=cond)
-#    object_list = Imovel.objects.all()
-    imovel_list = ImovelFilterCondominio(request.GET, queryset=imovel)
+       uso = request.POST.get('uso')
+       tipo = request.POST.get('tipo')
+       conservacao= request.POST.get('estadoConserv')
+       padrao = request.POST.get('padrao')
+       idade = request.POST.get('idade')
+       aT = request.POST.get('atotal')
+       aC = request.POST.get('aconstruida')
+       condominio = request.POST.get('condominio')
+       bairro = request.POST.get('bairro')
+       cidade = request.POST.get('cidade')
+       estado = request.POST.get('estado')
 
-    context = {
-        'imovel': imovel,
-        'filter': imovel_list,
-    }
-    return render(request, 'portal/referenciais.html', {'filter': imovel_list})
+       busca = Q(
+           Q(nomecondominio__nome=condominio) | Q(bairro=bairro)
+       )
+       dados = (uso, tipo, conservacao, padrao, idade, aT, aC,
+                condominio, bairro, cidade, estado)
 
+       Listimovel = Imovel.objects.filter(busca)
+
+       context = {
+           'filtroCond': Listimovel,
+           'dados':dados,
+        }
+
+       return render(request, 'portal/referenciais.html', context=context)
+
+def calcula(request):
+    return render(request, 'portal/calculos.html')
 
 def imovel_edit(request, imovel_pk):
     imovel = get_object_or_404(Imovel, pk=imovel_pk)
@@ -49,7 +84,7 @@ def imovel_edit(request, imovel_pk):
             imovel.save()
             return redirect('imoveis')
         else:
-            return render(request, 'portal/imovel_edit..html', {'form': form, 'post': imovel})
+            return render(request, 'portal/imovel_edit.html', {'form': form, 'post': imovel})
 
     elif (request.method == 'GET'):
         return render(request, 'portal/imovel_edit.html', {'form': form, 'post': imovel})
