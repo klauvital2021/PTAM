@@ -33,6 +33,9 @@ class Nomecondominio(models.Model):
     def get_absolute_url(self):
         return reverse("cond_edit", kwargs={"cond_pk": self.id})
 
+    class Meta:
+       ordering = ['nome']
+
 
 class Padrao(models.Model):
     nome = models.CharField(max_length=100, blank=True, null=True)
@@ -59,6 +62,8 @@ class Tipo(models.Model):
     def __str__(self):
         return self.nome
 
+    class Meta:
+       ordering = ['nome']
 
 class Vidautil(models.Model):
     nome = models.CharField(max_length=100, blank=True, null=True)

@@ -55,8 +55,15 @@ def referenciais(request):
        estado = request.POST.get('estado')
 
        busca = Q(
-           Q(nomecondominio__nome=condominio) | Q(bairro=bairro)
-       )
+           Q(
+               Q(nomecondominio__nome=condominio) | Q(bairro=bairro)
+           )
+           & Q(padrao__nome=padrao)
+           & Q(tipo__nome=tipo)
+
+           )
+
+
        dados = (uso, tipo, conservacao, padrao, idade, aT, aC,
                 condominio, bairro, cidade, estado)
 
@@ -70,7 +77,25 @@ def referenciais(request):
        return render(request, 'portal/referenciais.html', context=context)
 
 def calcula(request):
-    return render(request, 'portal/calculos.html')
+    ac = request.POST.get('dados.6')
+    imoveis = request.POST.get('filtroCond')
+    ok = request.POST.get('ok')
+
+    for Imovel in imoveis:
+        metro2 = (metro2+ (Imovel.valordevenda/Imovel.aconstruida))
+        cont = cont + 1
+        media = (metro2/ cont)
+        print(metro2, cont, media)
+
+    valorAvaliacao= (metro2 * ac)
+
+    context = {
+        'metro2': metro2,
+        'contador':cont,
+        'media' : media,
+        'Precificação': valorAvaliacao,
+    }
+    return render(request, 'portal/calculos.html', context=context)
 
 def imovel_edit(request, imovel_pk):
     imovel = get_object_or_404(Imovel, pk=imovel_pk)
