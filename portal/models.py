@@ -79,13 +79,13 @@ status_choices = (
     )
 
 class Imovel(models.Model):
-    valordevenda = models.DecimalField(db_column='valorDeVenda', max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='Valor de venda')  # Field name made lowercase.
+    valordevenda = models.DecimalField(db_column='valorDeVenda', max_digits=10, decimal_places=2, blank=False, null=False, default=0, verbose_name='Valor de venda')  # Field name made lowercase.
     nomecondominio = models.ForeignKey(Nomecondominio, on_delete=models.CASCADE,  blank=True, null=True, verbose_name='Condominio')
     idade = models.IntegerField(blank=True)
     bairro = models.CharField(max_length=100, blank=True)
     cidade = models.CharField(max_length=200, blank=True)
-    aconstruida = models.DecimalField(blank=True, max_digits=10, decimal_places=2,  verbose_name='Área Construída/Útil')
-    atotal = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name='Área Total')
+    aconstruida = models.DecimalField(blank=False, null=False, default=0, max_digits=10, decimal_places=2,  verbose_name='Área Construída/Útil')
+    atotal = models.DecimalField(blank=False, null=False, default=0, max_digits=10, decimal_places=2, verbose_name='Área Total')
     dtacadastro = models.DateField(db_column='dtaCadastro', blank=True, null=True, verbose_name='Data de cadastro')  # Field name made lowercase.
     status = models.CharField(max_length=1, choices=status_choices)
     padrao = models.ForeignKey(Padrao, on_delete=models.CASCADE, blank=True)
@@ -98,13 +98,15 @@ class Imovel(models.Model):
         unique_together = ['padrao', 'tipo', 'nomecondominio', 'estadoconser', 'corretor', 'vidautil']
 
     def __str__(self):
-        return "{} - {} - {} - {} - {} -{}".format(self.padrao.nome, self.tipo.nome, self.nomecondominio.nome, self.estadoconser.nome, self.corretor.nome, self.vidautil.nome)
+        return "{} - {} - {} - {} - {} - {} ".format(self.padrao.nome, self.tipo.nome, self.nomecondominio.nome, self.estadoconser.nome, self.corretor.nome, self.vidautil.nome)
+
+    def __float__(self):
+        return "{} - {} - {}".format(self.valordevenda, self.aconstruida, self.atotal)
+
+    def metroquadrado(self):
+        metro_quadrado=((self.valordevenda)/(self.aconstruida))
+        return metro_quadrado
 
     def get_absolute_url(self):
         return reverse("editar", kwargs={"imovel_pk": self.id})
 
-'''
-    def get_absolute_url(self):
-        return reverse("referenciais", kwargs={"imovel.nomecondominio": self.nomecondominio})
-
-'''
