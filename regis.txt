@@ -1,0 +1,24 @@
+Muito bom !!! Regis preciso conseguir comparar uma variável a um campo desta lista do modelo. Fiz assim - 
+lst = [field.name for field in Tabelarossheideck._meta.get_fields()]
+        print(lst)
+
+        if ec in lst:
+           indice = lst.index(ec)
+           coluna = (lst.pop(ec))
+           indiceApl = Tabelarossheideck.objects.filter(Q(idade_em_de_vida=vidautil) & Q(coluna=ec))
+           return indiceApl
+
+Teria que me retornar um float , mas esta me dando esse erro :
+'str' object cannot be interpreted as an integer     Please !!
+
+
+ def filtraid(self, vu):
+        lista_id = Tabelarossheideck.objects.filter(idade_em_de_vida=vu)
+        return self.id
+
+
+from portal.models import Tabelarossheideck
+from django.db.models import Q
+vu = 2
+Tabelarossheideck.objects.filter(idade_em_de_vida=vu)
+

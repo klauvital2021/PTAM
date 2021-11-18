@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
-
+from django.db.models import Q
+import numpy as np
 
 class Corretor(models.Model):
     nome = models.CharField(max_length=200)
@@ -18,7 +19,7 @@ class Estadoconser(models.Model):
     codigo = models.CharField(max_length=1, blank=True, null=True)
 
     def __str__(self):
-        return self.nome
+        return self.nome, self.codigo
 
 
 class Nomecondominio(models.Model):
@@ -45,16 +46,19 @@ class Padrao(models.Model):
 
 
 class Tabelarossheideck(models.Model):
-    idade_em_de_vida = models.TextField(db_column='IDADE EM % DE VIDA', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    a = models.TextField(db_column='A', blank=True, null=True)  # Field name made lowercase.
-    b = models.TextField(db_column='B', blank=True, null=True)  # Field name made lowercase.
-    c = models.TextField(db_column='C', blank=True, null=True)  # Field name made lowercase.
-    d = models.TextField(db_column='D', blank=True, null=True)  # Field name made lowercase.
-    e = models.TextField(db_column='E', blank=True, null=True)  # Field name made lowercase.
-    f = models.TextField(db_column='F', blank=True, null=True)  # Field name made lowercase.
-    g = models.TextField(db_column='G', blank=True, null=True)  # Field name made lowercase.
-    h = models.TextField(db_column='H', blank=True, null=True)  # Field name made lowercase.
+    idade_em_vida = models.TextField(db_column='idade_em_vida', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    A = models.TextField(blank=True, null=True)  # Field name made lowercase.
+    B = models.TextField(blank=True, null=True)  # Field name made lowercase.
+    C = models.TextField(blank=True, null=True)  # Field name made lowercase.
+    D = models.TextField(blank=True, null=True)  # Field name made lowercase.
+    E = models.TextField(blank=True, null=True)  # Field name made lowercase.
+    F = models.TextField(blank=True, null=True)  # Field name made lowercase.
+    G = models.TextField(blank=True, null=True)  # Field name made lowercase.
+    H = models.TextField(blank=True, null=True)  # Field name made lowercase.
 
+    def retorna_id(vidautil):
+        retorna = Tabelarossheideck.objects.get(idade_em_vida=vidautil)
+        return retorna.id
 
 class Tipo(models.Model):
     nome = models.CharField(max_length=100, blank=True, null=True)

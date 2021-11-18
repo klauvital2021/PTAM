@@ -1,9 +1,10 @@
+import math
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 import locale
 
 from portal.forms import ImovelForm, PadraoForm, NomecondominioForm, EstadoconserForm, TipoForm, ImovelFormFilter
-from portal.models import Imovel, Padrao, Nomecondominio, Estadoconser, Tipo
+from portal.models import Imovel, Padrao, Nomecondominio, Estadoconser, Tipo, Tabelarossheideck
 from django.db.models.aggregates import Avg,Sum,Count
 
 
@@ -50,7 +51,7 @@ def referenciais(request):
        tipo = request.POST.get('tipo')
        conservacao= request.POST.get('estadoConserv')
        padrao = request.POST.get('padrao')
-       idade = request.POST.get('idade')
+       idade = int(request.POST.get('idade'))
        aT = request.POST.get('atotal')
        aC = int(request.POST.get('aconstruida'))
        condominio = request.POST.get('condominio')
@@ -69,26 +70,36 @@ def referenciais(request):
                 condominio, bairro, cidade, estado)
 
        Listimovel = Imovel.objects.filter(busca)
-       '''
-       medias=Imovel.objects.filter(busca).aggregate(media_valor=Avg('valordevenda'), media_area=Avg('aconstruida'))
-  #    metro_quadr= decimal((medias.media_valor)/(medias.media_area))
 
-       for i in medias:
-            metro_quadr = (medias.media_valor/medias.media_valor)
-            print(metro_quadr)
-'''
        metro_quadr = 0
        cont = 0
+
        for i in Listimovel:
-          metro_quadr+= i.metroquadrado()
-          cont += 1
+           if idade == i.idade:
+                   metro_quadr += (i.metroquadrado())
+                   cont += 1
+                   print(metro_quadr, cont)
+           else:
+                   ec = i.estadoconser.codigo
+                   vidautil = math.ceil(((idade - i.idade) * 100) / i.vidautil.idadevidautil)
+                   lst = [field.name for field in Tabelarossheideck._meta.get_fields()]
+                   print(lst)
+                   if ec in lst:
+                       # retorna o indice que esta a coluna
+                       indice = lst.index(ec)
+                       # retorna a coluna de acordo com o indice
+                       coluna = (lst.pop(indice))
+                       # retorna o id da tabelarossheideck de acordo com a vida util
+                       linha = Tabelarossheideck.objects.get(idade_em_vida=vidautil).id
+                       # tem que retornar o valor da tabela de acordo com id e a coluna
+                       indice_trh = Tabelarossheideck.objects.filter(
+                           Q(id=linha) | Q(coluna='ec'))
+                       metro_quadr += (i.metroquadrado()-((i.metroquadrado() * indice_trh) / 100))
+                       cont += 1
 
        media_m2 = round(metro_quadr / cont, 2)
        locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
        valorAvaliacao = (media_m2 * aC)
-  #     media_m2 = locale.currency(media_m2)
-  #     valorAvaliacao = locale.currency(valorAvaliacao)
-
        media_m2 = "R$ {:,.2f}".format(media_m2).replace(",", "X").replace(".", ",").replace("X", ".")
        valorAvaliacao = "R$ {:,.2f}".format(valorAvaliacao).replace(",", "X").replace(".", ",").replace("X", ".")
 
@@ -102,26 +113,13 @@ def referenciais(request):
        return render(request, 'portal/referenciais.html', context=context)
 
 
-def calcula(request):
-    ac = request.POST.get('dados.6')
-    imoveis = request.POST.get('filtroCond')
-    ok = request.POST.get('ok')
-
-    for Imovel in imoveis:
-        metro2 = (metro2+ (Imovel.valordevenda/Imovel.aconstruida))
-        cont = cont + 1
-        media = (metro2/ cont)
-        print(metro2, cont, media)
-
-    valorAvaliacao= (metro2 * ac)
+def calcula(request, idadeIA, imovel_id):
 
     context = {
-        'metro2': metro2,
-        'contador':cont,
-        'media' : media,
-        'Precificação': valorAvaliacao,
+
     }
     return render(request, 'portal/calculos.html', context=context)
+
 
 def imovel_edit(request, imovel_pk):
     imovel = get_object_or_404(Imovel, pk=imovel_pk)

@@ -12,11 +12,10 @@
        <b>Área Construída: </b>{{ dados.6 }} m², <b>Condomínio:</b> {{ dados.7 }},
        <b>Bairro:</b> {{ dados.8 }},<b> Cidade:</b> {{ dados.9 }},<b> Estado: </b>{{ dados.10 }}.
 
-   </div>
- <br/>
+   </div><br/>
    <div>
-       Lista dos imóveis selecionados de mesmo Padrão, Tipo e Bairro: </div>
- <br/>
+       Lista dos imóveis selecionados de mesmo Padrão, Tipo e Bairro: </div> <br/>
+
         <table class = "table table-striped">
           <thead>
             <tr>
@@ -33,6 +32,7 @@
                 <th>EC</th>
                 <th>Idade</th>
                 <th>Valor</th>
+                <th>Selecionar</th>
 
             </tr>
           </thead>
@@ -47,21 +47,24 @@
                  <td>{{ imovel.cidade }} </td>
                  <td>{{ imovel.aconstruida }} </td>
                  <td>{{ imovel.atotal }} </td>
-
                  <td>{{ imovel.padrao.nome }} </td>
                  <td>{{ imovel.estadoconser.nome }} </td>
                  <td>{{ imovel.idade }} </td>
                  <td>{{ imovel.valordevenda }} </td>
-
+                 <td><input type="checkbox" name="selecionado" id="selecionado" checked></td>
              </tr>
 
              {% endfor %}
 
           </tbody>
         </table>
-
-        <div><h4><b>Média m² = </b> {{ media_metro2 }} <b> x  Área Construída = </b>{{ area_construida  }} =>
-        <b>Valor Avaliado = </b> {{ valor }} </h4></div>
+        <div>
+            <h4>
+                <b>Média m² = </b> {{ media_metro2 }}
+                <b>*  Área Construída = </b>{{ area_construida }} m²=>
+                <b>Valor Avaliado = </b> {{ valor }}
+            </h4>
+        </div>
 </div>
 </div>
 {% endblock %}
